@@ -10,7 +10,7 @@
  */
 ?>
 <section class="col-lg-12 my-contact-section">
-    <h3 class="main-header">My Contact></h3>
+    <h3 class="main-header">My Contact</h3>
 
     <!--  render the first available user contact so far  -->
     <? foreach ($data['user_contacts'] as $contact):

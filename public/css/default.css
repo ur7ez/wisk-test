@@ -1,0 +1,104 @@
+html {
+    position: relative;
+    min-height: 100%;
+    overflow-x: hidden;
+}
+
+body {
+    /*margin-bottom: 60px;*/
+    padding-top: 15px;
+    overflow-x: hidden;
+}
+
+.main-header {
+    text-align: center;
+    color: #856404;
+}
+
+.nav .menu {
+    margin-left: 20px;
+}
+
+.menu button {
+    border-radius: 10px;
+}
+
+.welcome-msg {
+    color: green;
+}
+
+.content {
+    border: 1px solid grey;
+    padding: 5px;
+    min-height: 300px;
+}
+
+.highlight-me {
+    background: lightgreen;
+    font-style: oblique;
+}
+
+.login-form {
+    margin: 10px auto;
+    width: 350px;
+}
+
+.public-phonebook .contact-name {
+    width: 250px;
+    display: inline-block;
+}
+
+.detail-container {
+    padding: 15px;
+    width: 80%;
+    margin: 10px auto;
+    font-style: initial;
+}
+
+.contact-phones, .contact-emails {
+    max-width: 220px;
+}
+
+.contact-address {
+    min-width: 450px;
+}
+
+.my-contact-form .contact-dataset label {
+    width: 90px;
+}
+
+.my-contact-form .contact-dataset legend {
+    text-decoration: underline;
+    color: darkgrey;
+    font-weight: 500;
+    font-size: 1.3rem;
+}
+
+.my-contact-form .publish-my-contact label {
+    color: #533f03;
+    font-weight: 500;
+}
+
+.my-contact-form .add-button {
+    cursor: pointer;
+    color: deepskyblue;
+    text-decoration: underline;
+    float: right;
+    padding: 10px;
+    margin-right: 32px;
+    font-weight: 500;
+}
+
+/* ================ Pagination ================ */
+
+.paging {
+    transition: opacity 1s ease-in-out;
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+.show-other-pages:hover + div.paging, div.paging:hover {
+    opacity: 1;
+    height: auto;
+}

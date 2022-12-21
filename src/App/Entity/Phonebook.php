@@ -85,23 +85,24 @@ class Phonebook extends Base
     /**
      * Проверяет поля таблицы, в которую будем
      * вносить изменения в методе parent::save()
-     * @param $data
+     * @param array $data
      * @throws \Exception
      */
-    public function checkFields($data) {
+    public function checkFields (array $data)
+    {
         $msg = [];
         foreach ($data as $key => $val) {
             switch ($key) {
                 case 'first_name':
                 case 'last_name':
-                    if (!is_string($val) || !strlen($val)) {
+                    if (!\is_string($val) || $val === '') {
                         $msg[] = "phonebook $key can\'t be empty";
                     }
                     break;
                 case 'country_id':
                 case 'email':
                 case 'phone':
-                    if (!is_string($val) || !strlen($val)) {
+                    if (!\is_string($val) || $val === '') {
                         $msg[] = "phonebook $key can\'t be empty";
                     }
                     break;

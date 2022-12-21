@@ -30,20 +30,19 @@ class Router
      * @param bool $clean
      * @return string
      */
-    public function getController($clean = false)
+    public function getController(bool $clean = false)
     {
         if ($this->controller) {
             return $this->controller . (!$clean ? 'Controller' : '');
-        } else {
-            return null;
         }
+        return '';
     }
 
     /**
      * @param bool $clean
      * @return string
      */
-    public function getAction($clean = false)
+    public function getAction(bool $clean = false)
     {
         return $this->action . (!$clean ? 'Action' : '');
     }
@@ -69,7 +68,7 @@ class Router
             trim($parts['path'], '/')
         );
 
-        if (current($pathParts) && in_array(current($pathParts), Config::get('routes'))) {
+        if (current($pathParts) && \in_array(current($pathParts), Config::get('routes'))) {
             $this->route = array_shift($pathParts);
         }
 

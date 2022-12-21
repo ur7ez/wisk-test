@@ -21,9 +21,9 @@ class Session
      * @param $message
      * @return void
      */
-    public static function setFlash($message)
+    public static function setFlash($message): void
     {
-        if (!isset($_SESSION['flash']) || !is_array($_SESSION['flash'])) {
+        if (!isset($_SESSION['flash']) || !\is_array($_SESSION['flash'])) {
             $_SESSION['flash'] = [];
         }
         $_SESSION['flash'][] = $message;
@@ -32,7 +32,7 @@ class Session
     /**
      * @return bool
      */
-    public static function hasFlash()
+    public static function hasFlash(): bool
     {
         return !empty($_SESSION['flash']);
     }
@@ -40,9 +40,9 @@ class Session
     /**
      * @return array
      */
-    public static function flash()
+    public static function flash(): array
     {
-        $data = isset($_SESSION['flash']) ? $_SESSION['flash'] : [];
+        $data = $_SESSION['flash'] ?? [];
         $_SESSION['flash'] = [];
         return $data;
     }
@@ -51,7 +51,7 @@ class Session
      * @param $key
      * @param $value
      */
-    public static function set($key, $value)
+    public static function set($key, $value): void
     {
         $_SESSION[$key] = $value;
     }
@@ -62,10 +62,7 @@ class Session
      */
     public static function get($key)
     {
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        }
-        return null;
+        return $_SESSION[$key] ?? null;
     }
 
     /**

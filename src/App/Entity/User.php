@@ -26,9 +26,7 @@ class User extends Base
      */
     public function checkFields($data)
     {
-        if (!isset($data['name']) || !isset($data['login']) || !isset($data['email'])
-            || !isset($data['password']) || !strlen($data['login'])
-            || !strlen($data['email']) || !strlen($data['password'])) {
+        if (!isset($data['name'], $data['login'], $data['email'], $data['password']) || $data['login'] == '' || $data['email'] == '' || $data['password'] == '') {
             throw new \Exception('Registration data fields can\'t be empty');
         }
     }
@@ -60,7 +58,7 @@ class User extends Base
     public function register($data)
     {
         $data['role'] = 'user';  // 'admin' role users should be registered off-line
-        $data['password'] = md5(Config::get('sault') . $data['password']);
+        $data['password'] = md5(Config::get('salt') . $data['password']);
         if ($this->getByLogin($data['login'])) {
             return false;
         } else {
@@ -80,6 +78,6 @@ class User extends Base
                 . ' WHERE login = ' . $this->conn->escape($login) . ' LIMIT 1';
             $result = $this->conn->query($sql);
         }
-        return isset($result[0]) ? $result[0] : null;
+        return $result[0] ?? null;
     }
 }

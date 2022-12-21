@@ -6,14 +6,17 @@
 
 /**
  * @var array $data from \App\Views\Base::render()
- * @var \App\Core\Router $router from \App\Core\App::getRouter()
+ * @var Router $router from \App\Core\App::getRouter()
  */
+
+use App\Core\Router;
+
 ?>
 <section class="col-lg-12 my-contact-section">
     <h3 class="main-header">My Contact</h3>
 
     <!--  render the first available user contact so far  -->
-    <? foreach ($data['user_contacts'] as $contact):
+    <?php foreach ($data['user_contacts'] as $contact):
         $id = $contact['id']; ?>
         <form class="my-contact-form" action="<?= $router->buildUri('phonebook.edit') ?>" method="post"
               enctype="multipart/form-data" id="my-contact-form">
@@ -66,10 +69,10 @@
                                 <label class="input-group-text" for="country<?= $id ?>">Country: </label>
                             </div>
                             <select class="custom-select" id="country<?= $id ?>" name="country_id" required>
-                                <? foreach ($data['countries'] as $country):
+                                <?php foreach ($data['countries'] as $country):
                                     $own_country = ($contact['country_id'] === $country['id']) ? ' selected' : ''; ?>
                                     <option value="<?= $country['id'] ?>"<?= $own_country ?>><?= $country['nicename'] ?></option>
-                                <? endforeach; ?>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </fieldset>
@@ -78,7 +81,7 @@
                 <div class="form-group">
                     <fieldset class="contact-phones col">
                         <legend class="col-form-label text-center">Phones</legend>
-                        <? foreach ($data['contact_phones'] as $phone): ?>
+                        <?php foreach ($data['contact_phones'] as $phone): ?>
                             <div class="form-text">
                                 <input type="tel" value="<?= $phone['phone'] ?>" class="form-control-sm" required
                                        name="<?= $phone['id'] ?>_phones!phone" title="contact's phone number">
@@ -86,7 +89,7 @@
                                        name="<?= $phone['id'] ?>_phones!published" title="check to publish this phone"
                                     <?= $phone['published'] ? ' checked' : '' ?>>
                             </div>
-                        <? endforeach; ?>
+                        <?php endforeach; ?>
                     </fieldset>
                     <div class="add-button" data-type="tel" data-name1="_phones!phone"
                          data-name2="_phones!published" data-class="contact-phones"
@@ -97,7 +100,7 @@
                 <div class="form-group">
                     <fieldset class="contact-emails col">
                         <legend class="col-form-label text-center">Emails</legend>
-                        <? foreach ($data['contact_emails'] as $email): ?>
+                        <?php foreach ($data['contact_emails'] as $email): ?>
                             <div class="form-text">
                                 <input type="email" value="<?= $email['email'] ?>" class="form-control-sm" required
                                        name="<?= $email['id'] ?>_emails!email" title="contact's email">
@@ -106,7 +109,7 @@
                                        title="check to publish this email"
                                     <?= $email['published'] ? ' checked' : '' ?>>
                             </div>
-                        <? endforeach; ?>
+                        <?php endforeach; ?>
                     </fieldset>
                     <div class="add-button" data-type="email" data-name1="_emails!email"
                          data-name2="_emails!published" data-class="contact-emails"
@@ -122,7 +125,7 @@
             </div>
         </form>
 
-    <? endforeach; ?>
+    <?php endforeach; ?>
 
     <!--        Pagination       -->
     <small class="d-block text-right mt-3">
@@ -133,11 +136,11 @@
                     if ($cnt == 1) : ?>
                         <li class="page-item show-other-pages order-2"><span class="page-link"> ... </span></li>
                         <div class="card-deck btn-group-vertical paging mx-auto order-3">
-                    <? endif;
+                    <?php endif;
                     if ($cnt == count($data['pagination']->buttons) - 1) : ?>
                         </div>
-                    <? endif; ?>
-                    <? if ($button->isActive) : ?>
+                    <?php endif; ?>
+                    <?php if ($button->isActive) : ?>
                     <li class="page-item">
                         <a class="page-link clickable-pagelink"
                            href='<?= $router->buildUri('phonebook.view') . '?page=' . $button->page ?>'>

@@ -13,7 +13,7 @@ use App\Entity\User;
 class UsersController extends Base
 {
     /** @var User */
-    private $usersModel;
+    private User $usersModel;
 
     public function __construct($params = []) {
         parent::__construct($params);
@@ -41,7 +41,7 @@ class UsersController extends Base
     public function loginAction() {
         if ($_POST && isset($_POST['login']) && isset($_POST['password'])) {
             $user = $this->usersModel->getByLogin($_POST['login']);
-            $hash = md5(Config::get('sault') . $_POST['password']);
+            $hash = md5(Config::get('salt') . $_POST['password']);
             if ($user && $user['active']) {
                 if ($hash == $user['password']) {
                     $ctrl = Config::get('defaultController');

@@ -8,7 +8,7 @@ namespace App\Core\Traits;
 
 trait Singleton
 {
-    protected static $instance = null;
+    protected static $instance;
 
     final public static function getInstance()
     {
@@ -20,15 +20,16 @@ trait Singleton
 
     abstract protected function __construct();
 
-    final private function __clone()
+    private function __clone()
     {
     }
 
-    final private function __sleep()
+    final public function __sleep(): array
     {
+        return  [];
     }
 
-    final private function __wakeup()
+    final public function __wakeup()
     {
     }
 }

@@ -6,8 +6,10 @@
 
 /**
  * @var array $data from \App\Views\Base::render()
- * @var \App\Core\Router $router from \App\Core\App::getRouter()
+ * @var Router $router from \App\Core\App::getRouter()
  */
+
+use App\Core\Router;
 
 $detail_class = 'd-none';
 $item_number = $data['cur_number'];
@@ -16,7 +18,7 @@ $space_mult = 4 + ($data['count_all'] / 100 > 1);
 <section class="col-lg-12">
     <h3 class="main-header">Public Phonebook</h3>
     <ul class="public-phonebook list-unstyled">
-        <? foreach ($data['all_contacts'] as $contact):
+        <?php foreach ($data['all_contacts'] as $contact):
             $item_number++;
             $str_num = str_pad($item_number . '.', 4, '*');
             $str_num = str_replace("*", "&nbsp;", $str_num);
@@ -39,28 +41,28 @@ $space_mult = 4 + ($data['count_all'] / 100 > 1);
                     <div class="pb-phones card mx-2">
                         <p class="card-header text-center">Phone numbers</p>
                         <ul class="card-body list-unstyled">
-                            <? $phones = explode(',', $contact['phones']);
+                            <?php $phones = explode(',', $contact['phones']);
                             foreach ($phones as $phone):
                                 $phone_f = $phone;
                                 if (preg_match('/^(\d{3})(\d{3})(\d{4})$/', $phone, $matches)) {
                                     $phone_f = $matches[1] . '-' . $matches[2] . '-' . $matches[3];
                                 } ?>
                                 <li class="card-text">+<?= $contact['phonecode'] . '-' . $phone_f ?></li>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                     <div class="pb-emails card mx-2">
                         <p class="card-header text-center">Emails</p>
                         <ul class="card-body list-unstyled">
-                            <? $emails = explode(',', $contact['emails']);
+                            <?php $emails = explode(',', $contact['emails']);
                             foreach ($emails as $email): ?>
                                 <li class="card-text"><?= $email ?></li>
-                            <? endforeach; ?>
+                            <?php endforeach; ?>
                         </ul>
                     </div>
                 </div>
             </li>
-        <? endforeach; ?>
+        <?php endforeach; ?>
     </ul>
 
     <!--        Pagination       -->
@@ -72,11 +74,11 @@ $space_mult = 4 + ($data['count_all'] / 100 > 1);
                     if ($cnt == 1) : ?>
                         <li class="page-item show-other-pages order-2"><span class="page-link"> ... </span></li>
                         <div class="card-deck btn-group-vertical paging mx-auto order-3">
-                    <? endif;
+                    <?php endif;
                     if ($cnt == count($data['pagination']->buttons) - 1) : ?>
                         </div>
-                    <? endif; ?>
-                    <? if ($button->isActive) : ?>
+                    <?php endif; ?>
+                    <?php if ($button->isActive) : ?>
                     <li class="page-item">
                         <a class="page-link clickable-pagelink"
                            href='<?= $router->buildUri('phonebook.index') . '?page=' . $button->page ?>'>

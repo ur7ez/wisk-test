@@ -31,38 +31,38 @@ $xhr = isset($_GET['transport']) && $_GET['transport'] === 'xhr';
 <h1 class="main-header"><?= \App\Core\Config::get('siteName') ?></h1>
 <nav class="nav justify-content-md-between">
     <div class="menu">
-        <? if ($_SERVER['REQUEST_URI'] !== '/'): ?>
+        <?php if ($_SERVER['REQUEST_URI'] !== '/'): ?>
             <a class="btn btn-primary"
                href="<?= $router->buildUri('.') ?>">Home</a>
-        <? endif; ?>
-        <? if ($session->get('login')): ?>
+        <?php endif; ?>
+        <?php if ($session::get('login')): ?>
             <a class="btn btn-primary"
                id="user-logout" href="<?= $router->buildUri('users.logout') ?>">Logout</a>
-        <? else: ?>
+        <?php else: ?>
             <a class="btn btn-primary<?= ($action === 'login') ? ' active' : '' ?>"
                id="user-login" href="<?= $router->buildUri('users.login') ?>">Login</a>
-        <? endif; ?>
+        <?php endif; ?>
         <a class="btn btn-primary<?= ($ctrlr === 'phonebook' && $action === 'index' && $xhr) ? ' active' : '' ?>"
            id="public-phonebook" href="<?= $router->buildUri('phonebook.index') ?>">Public Phonebook</a>
-        <? if ($session->get('login')): ?>
+        <?php if ($session::get('login')): ?>
             <a class="btn btn-primary<?= ($ctrlr === 'phonebook' && $action === 'view' && $xhr) ? ' active' : '' ?>"
                id="my-contact" href="<?= $router->buildUri('phonebook.view') ?>">My Contact</a>
-        <? endif; ?>
+        <?php endif; ?>
     </div>
-    <? if ($session->get('login')): ?>
+    <?php if ($session::get('login')): ?>
         <div class="welcome-msg mr-4 align-self-center">
-            Wellcome, <span><i><?= $session->get('name') . ' (' . $session->get('login') . ')' ?></i></span>
+            Wellcome, <span><i><?= $session::get('name') . ' (' . $session::get('login') . ')' ?></i></span>
         </div>
-    <? endif; ?>
+    <?php endif; ?>
 </nav>
 
 <main class="container-flex pt-3 px-3 pb-1" role="main">
-    <? if ($session->hasFlash()):
-        foreach ($session->flash() as $msg): ?>
+    <?php if ($session::hasFlash()):
+        foreach ($session::flash() as $msg): ?>
             <div class="alert alert-info py-1" role="alert">
                 <?= $msg ?>
             </div>
-        <? endforeach;
+        <?php endforeach;
     endif; ?>
     <div class="content">
         <?= $data['content'] ?>

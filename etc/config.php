@@ -24,22 +24,20 @@ Config::set('itemsPerPage', 15);
  */
 Config::set('debug', true);
 
-
 /**
  * Meta
  */
 Config::set('siteName', 'Phonebook');
 
-
 /**
  * Database
  */
-Config::set('db.host', 'localhost:3306');
+Config::set('db.host', 'mariadb');  // for non-docker use 'localhost:3306'
 Config::set('db.user', 'root');
-Config::set('db.password', '');
+Config::set('db.password', 'root');
 Config::set('db.name', 'phonebook');
 
 /**
  * User
  */
-Config::set('sault', 'sdf703dfg884$hsd7dfdf4');
+Config::set('salt', 'sdf703dfg884$hsd7dfdf4');

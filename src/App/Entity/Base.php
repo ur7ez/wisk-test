@@ -10,21 +10,20 @@ use App\Core\DB\IConnection;
 
 abstract class Base
 {
-
-    /** @var \App\Core\DB\IConnection */
-    protected $conn;
+    protected IConnection $conn;
 
     abstract function getTableName($choose = 0);
 
-    abstract function checkFields($data);
+    abstract function checkFields(array $data);
 
     abstract function getFields($choose = 0);
 
     /**
      * Base constructor
-     * @param \App\Core\DB\IConnection $connection
+     * @param IConnection $connection
      */
-    public function __construct(IConnection $connection) {
+    public function __construct(IConnection $connection)
+    {
         $this->conn = $connection;
     }
 
@@ -34,15 +33,16 @@ abstract class Base
      * @param null $limit
      * @param int $offset
      * @param array $order
-     * @param int $get_total
+     * @param int|null $get_total
      * @return mixed
      */
-    public function list($filter = [], $table_id = 0, $limit = null, $offset = 0, $order = [], &$get_total = null) {
+    public function list (array $filter = [], int $table_id = 0, $limit = null, int $offset = 0, array $order = [], &$get_total = null)
+    {
         $fields = $this->getFields($table_id);
         $where = [];
         $strWhere = '';
         foreach ($filter as $fieldName => $value) {
-            if (!in_array($fieldName, $fields)) {
+            if (!\in_array($fieldName, $fields, true)) {
                 continue;
             }
             //$fieldName = $this->conn->escape($fieldName);
@@ -59,7 +59,7 @@ abstract class Base
         $sql = 'SELECT * FROM ' . $this->getTableName($table_id) . ' WHERE 1 ' . $strWhere;
         $result = $this->conn->query($sql . $order_clause . $limit_clause);
         if (isset($get_total)) {
-            $get_total = ($limit_clause === '') ? count($result) : count($this->conn->query($sql));
+            $get_total = ($limit_clause === '') ? \count($result) : \count($this->conn->query($sql));
         }
         return $result;
     }
@@ -71,7 +71,8 @@ abstract class Base
      * @param int $table_id
      * @return null
      */
-    public function getById($id, $limit = 1, $table_id = 0) {
+    public function getById($id, $limit = 1, $table_id = 0)
+    {
         $limit_clause = (empty($limit)) ? '' : ' LIMIT ' . $limit;
         $sql = 'SELECT * FROM ' . $this->getTableName($table_id)
             . ' WHERE id = ' . $this->conn->escape($id) . $limit_clause;
@@ -87,7 +88,8 @@ abstract class Base
      * @param int $table_id - source table id from App\Entity->getTableName()
      * @return mixed
      */
-    public function save($data, $id = null, $table_id = 0) {
+    public function save($data, $id = null, $table_id = 0)
+    {
         $this->checkFields($data);
 
         $fields = $this->getFields($table_id);
@@ -126,7 +128,8 @@ abstract class Base
      * @param $table_id
      * @return mixed
      */
-    public function delete($id, $table_id = 0) {
+    public function delete($id, $table_id = 0)
+    {
         $id = $this->conn->escape(intval($id));
         $sql = 'DELETE FROM ' . $this->getTableName($table_id)
             . ' WHERE id = ' . $id;
@@ -137,13 +140,15 @@ abstract class Base
      * Filters data array by a given id
      * @param array $array
      * @param string $field - a field in array to be inspected by a given ID value
-     * @param $ID
+     * @param $id
      * @return array
      */
-    static function filterArrayFromID($array, $field = '', $ID) {
+    static function filterArrayFromID (array $array, $id, string $field = ''): array
+    {
         return array_values(
-            array_filter($array, function ($arrayValue) use ($field, $ID) {
-                return $arrayValue[$field] == $ID;
-            }));
+            array_filter($array, static function ($arrayValue) use ($field, $id) {
+                return $arrayValue[$field] == $id;
+            })
+        );
     }
 }
